@@ -314,7 +314,7 @@
   .receive ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
   .receive li{font-size:.93rem;color:var(--ink);padding-left:16px;position:relative}
   .receive li::before{content:"";position:absolute;left:0;top:.7em;width:7px;height:1px;background:var(--accent)}
-  .receive .fine{margin:12px 0 0;font-size:.86rem;color:var(--mute);max-width:60ch}
+  .receive .fine,.launch .fine{margin:12px 0 0;font-size:.86rem;color:var(--mute);max-width:60ch}
   .feature{margin-top:36px;border:1px solid var(--accent-soft);padding:24px;background:var(--frost)}
   .feature h3{font-size:1.3rem;margin:4px 0 10px}
   .feature p{margin:0;font-size:.95rem}
@@ -351,8 +351,9 @@
   .rota td.care{color:var(--accent)}
   .tablewrap{overflow-x:auto}
 
-  .alacarte{display:flex;flex-direction:column;gap:0;margin-top:26px;max-width:520px}
-  .alacarte div{display:flex;justify-content:space-between;gap:20px;padding-block:11px;border-bottom:1px solid var(--line);font-size:.92rem}
+  .alacarte{display:flex;flex-direction:column;gap:0;margin-top:26px;max-width:640px}
+  .alacarte div{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding-block:11px;border-bottom:1px solid var(--line);font-size:.92rem}
+  .alacarte .v{flex:0 0 auto;white-space:nowrap}
   .alacarte .v{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
 
   .terms{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px 34px;margin-top:34px}
@@ -468,12 +469,12 @@
 
     <div class="rule">
       <b>Every day produces two cuts.</b>
-      <span>One written to run as paid media and one open version for the website, YouTube and organic. Compliance is built at the question, not fixed in the edit, so question sets go to your advertising team for review before each production day.</span>
+      <span>One written to run as paid media and one open version for the website, YouTube and organic. Compliance is built at the question, not fixed in the edit, so question sets and ad scripts go to your advertising team for review before each production day. A teleprompter is on set for scripted ad reads.</span>
     </div>
 
     <div class="rule">
-      <b>Half a day of Dr. Poe's time, at most.</b>
-      <span>That is the whole ask of the practice each month. The days that need patients are marked below, and there is a safety net for the month a patient cannot make it.</span>
+      <b>One production day a month. Once filming is complete, editing begins.</b>
+      <span>The days that need patients are marked below, and there is a safety net for the month a patient cannot make it.</span>
     </div>
   </section>
 
@@ -483,7 +484,7 @@
 
     <article class="dayw">
       <header><h3>Service Day</h3><span class="dep">Needs a patient</span></header>
-      <p>Say the month is Nano-Lipo. Bryan arrives mid-morning and sets up in the same spot as every other month, so the library looks like one series. Dr. Poe sits for about an hour and works through a prepared set of questions, already grouped into sections: what patients ask before they know what they need, what Nano-Lipo actually is and who it suits, and a short set written so the answers can run as ads. One sitting, no stopping, then she goes back to her day. A patient who has had Nano-Lipo sits for half an hour: her experience with the practice, then the service itself. The last stretch is the treatment room and the device, working. Bryan is out by early afternoon.</p>
+      <p>Say the month is Nano-Lipo. Bryan arrives mid-morning and sets up in the same spot as every other month, so the library looks like one series. Dr. Poe sits for about an hour and works through a prepared set of questions, already grouped into sections: what patients ask before they know what they need, what Nano-Lipo actually is and who it suits, and a short set written so the answers can run as ads. One sitting, no stopping, then she goes back to her day. A patient who has had Nano-Lipo sits for half an hour: her experience with the practice, then the service itself. The last stretch is the treatment room and the device, working. Once filming is complete, editing begins.</p>
       <div class="receive">
         <span class="k">Two weeks later, in one link</span>
         <ul>
@@ -497,11 +498,11 @@
 
     <article class="dayw">
       <header><h3>Story Day</h3><span class="dep">Needs three or four patients</span></header>
-      <p>No doctor needed. Three or four patients booked back to back, one chair, one setup. Each sits for about twenty-five minutes: why she came to Cryo &amp; Contour and what it was like, then the service she had. The questions steer toward the decision and the experience rather than results, which is what paid media allows and is the better story anyway. Bryan is out by lunch.</p>
+      <p>No doctor needed. Three or four patients booked back to back, one chair, one setup. Each sits for about twenty-five minutes and answers two sets of questions in the same sitting. The first set is written to Meta's guidelines, steering toward the decision and the experience rather than results, so those answers can run as paid media. The second set is for the website version, where she can speak more openly about the service she had and how it went. Once filming is complete, editing begins.</p>
       <div class="receive">
         <span class="k">Two weeks later</span>
         <ul>
-          <li>A standalone film for each patient</li>
+          <li>A film for each patient, in a version written for Meta and a website version</li>
           <li>Three reels</li>
           <li>The patient voices that will drop into future service films</li>
         </ul>
@@ -510,7 +511,7 @@
 
     <article class="dayw">
       <header><h3>Health Day</h3><span class="dep free">Needs nobody</span></header>
-      <p>Ninety minutes of Dr. Poe and nothing else. No patients, no device. She talks about health: sleep, hormones, metabolism, what to ask your doctor, whatever she wants her patients to understand. Bryan asks, she teaches. Because she is teaching rather than claiming, nearly all of it can run anywhere.</p>
+      <p>Ninety minutes of Dr. Poe and nothing else. No patients, no device. She talks about health: sleep, hormones, metabolism, what to ask your doctor, whatever she wants her patients to understand. Bryan asks, she teaches. A teleprompter is on set for anything she would rather deliver word for word, on this day and for any ad written to Meta's guidelines. Because she is teaching rather than claiming, nearly all of it can run anywhere.</p>
       <div class="receive">
         <span class="k">Two weeks later</span>
         <ul>
@@ -562,18 +563,19 @@
     <div class="feature">
       <span class="lab">Separately, about once a quarter</span>
       <h3>Patient Feature</h3>
-      <p>One patient. A conversation before the shoot to understand her story, then coverage built specifically to carry it. A short film rather than a testimonial. Because the story often lives outside the treatment room, this one may involve a second location and is scoped on its own.</p>
+      <p>One patient. A conversation before the shoot to understand her story, then coverage built specifically to carry it. A short film rather than a testimonial. Because the story often lives outside the treatment room, this one may involve a second location: following the patient through her day to film what life was like before, or simply how it has improved since. That footage is what turns an interview into a story, and it is why this piece is scoped on its own.</p>
     </div>
   </section>
 
   <section>
     <span class="lab">04 &nbsp;<span>The month</span></span>
-    <h2>Four weeks, the same every time.</h2>
+    <h2>The same four steps, every month.</h2>
+    <p>The month is built around the production day. The second week of the month is the preference, but when that does not work, the day moves and everything else moves with it.</p>
     <ol class="steps">
-      <li><p><b>Week 1.</b> The month's day is confirmed. Questions and any ad script are written and sent to your advertising team for review.</p></li>
-      <li><p><b>Week 2.</b> The production day. Half a day on location.</p></li>
-      <li><p><b>Week 3.</b> Post. Everything from that day is built.</p></li>
-      <li><p><b>Week 4.</b> Delivery in one link, your feedback, and the next month's day locked.</p></li>
+      <li><p><b>Pre.</b> The month's day is confirmed. Questions and any ad script are written and sent to your advertising team for review.</p></li>
+      <li><p><b>Film.</b> The production day. Once filming is complete, editing begins.</p></li>
+      <li><p><b>Post.</b> Everything from that day is built.</p></li>
+      <li><p><b>Delivery.</b> One link, your feedback, and the next month's day locked.</p></li>
     </ol>
 
     <h3 style="margin-top:44px">If a patient cannot make it</h3>
@@ -691,16 +693,18 @@
     <div class="launch">
       <div class="body">
         <h3>Launch project: the Nano-Lipo ad</h3>
+        <p style="font-size:.9rem;margin:0 0 12px">Filming September 21. A one-off, priced as a test run of the two-cut approach before the retainer begins.</p>
         <ul>
           <li>One production day on location</li>
           <li>Dr. Poe on camera, plus treatment and facility footage</li>
-          <li>Meta-compliant cut and an open cut for YouTube and organic</li>
-          <li>Horizontal and vertical versions of each</li>
+          <li>Two films: the Meta-compliant ad and a version for the website, each delivered horizontal and vertical</li>
+          <li>A third, a Nano-Lipo patient testimonial, if a patient is available that day</li>
           <li>Up to 2 rounds of revisions</li>
           <li>50 percent to book, balance on delivery</li>
         </ul>
+        <p class="fine" style="margin:12px 0 0">If no patient is available on the 21st, the ad still gets made, and Nano-Lipo becomes a full Service Day once the retainer is underway.</p>
       </div>
-      <div class="price">$1,750<small>One-time project</small></div>
+      <div class="price">$1,500<small>One-time project</small></div>
     </div>
 
     <div class="tablewrap">
@@ -708,16 +712,16 @@
         <caption>Monthly retainer &nbsp;/&nbsp; 12-month term</caption>
         <tbody>
           <tr class="pick">
-            <td><span class="name">Foundation</span><span class="pill">Recommended</span><span class="desc">One production day per month. One day type, its full bundle.</span></td>
-            <td class="amt">$3,500<span class="per">per month</span></td>
+            <td><span class="name">Foundation</span><span class="pill">Recommended</span><span class="desc">One production day per month, fully edited: the Meta-compliant ad and the website version, each delivered horizontal and vertical, plus the shorts and reels listed under that day type.</span></td>
+            <td class="amt">$3,000<span class="per">per month</span></td>
           </tr>
           <tr>
-            <td><span class="name">Growth</span><span class="desc">Two production days per month. Two day types, two bundles.</span></td>
-            <td class="amt">$6,500<span class="per">per month</span></td>
+            <td><span class="name">Growth</span><span class="desc">Two production days per month, each edited the same way. Two day types, two bundles.</span></td>
+            <td class="amt">$5,500<span class="per">per month</span></td>
           </tr>
           <tr>
-            <td><span class="name">Authority</span><span class="desc">Three production days per month.</span></td>
-            <td class="amt">$9,000<span class="per">per month</span></td>
+            <td><span class="name">Authority</span><span class="desc">Three production days per month, each edited the same way.</span></td>
+            <td class="amt">$7,500<span class="per">per month</span></td>
           </tr>
         </tbody>
       </table>
@@ -727,12 +731,12 @@
 
     <span class="lab" style="margin-top:30px">For retainer clients</span>
     <div class="alacarte">
-      <div><span>Additional production day</span><span class="v">$1,250</span></div>
-      <div><span>Interview sitting, half day, interviews only</span><span class="v">$750</span></div>
+      <div><span>Additional production day. One day on location, three finished pieces: one film plus two reels, horizontal and vertical. Anything further from that day is quoted separately.</span><span class="v">$1,250</span></div>
+      <div><span>Interview sitting, half day. Interviews only, footage banked into the library and cut inside a later month's bundle.</span><span class="v">$750</span></div>
     </div>
 
     <div class="terms">
-      <div><span class="k">Term</span><p>12 months from the agreed start date, then month to month unless either party gives 30 days' written notice.</p></div>
+      <div><span class="k">Term</span><p>The retainer begins once the agreement is signed. 12 months from that start date, then month to month unless either party gives 30 days' written notice.</p></div>
       <div><span class="k">Scheduling</span><p>Production days scheduled at least 7 days in advance. Unused days do not roll over.</p></div>
       <div><span class="k">Payment</span><p>The first month is due at signing, then on the 1st of each month. The launch project is 50 percent to book. Bank transfer, Zelle, or card through HoneyBook.</p></div>
       <div><span class="k">Delivery</span><p>Edited content delivered within 7 to 10 business days of each production day. Rush available for an additional fee.</p></div>
