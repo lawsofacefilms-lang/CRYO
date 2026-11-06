@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cryo &amp; Contour Monthly Planner</title>
+<meta name="description" content="Plan each month's production day with Laws of Ace Films.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,500;1,6..72,300&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ink:#212326;
+    --ink-2:#434549;
+    --mute:#6F7377;
+    --paper:#FFFFFF;
+    --surface:#F8F3EF;
+    --surface-2:#F2F3F5;
+    --line:#E6DDD4;
+    --accent:#96703F;
+    --accent-soft:#E1B584;
+    --accent-ink:#6E5027;
+    --frost:#FBF6F1;
+    --gold:#E1B584;
+    --ground:#141617;
+    --ground-2:#212326;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#F5F1EC;
+      --ink-2:#C9C4BD;
+      --mute:#8D9095;
+      --paper:#141617;
+      --surface:#1C1F21;
+      --surface-2:#24282B;
+      --line:#2F3437;
+      --accent:#E1B584;
+      --accent-soft:#6E5027;
+      --accent-ink:#EFD5B8;
+      --frost:#1F2224;
+      --gold:#E1B584;
+      --ground:#0E1011;
+      --ground-2:#1C1F21;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#F5F1EC;
+    --ink-2:#C9C4BD;
+    --mute:#8D9095;
+    --paper:#141617;
+    --surface:#1C1F21;
+    --surface-2:#24282B;
+    --line:#2F3437;
+    --accent:#E1B584;
+    --accent-soft:#6E5027;
+    --accent-ink:#EFD5B8;
+    --frost:#1F2224;
+    --gold:#E1B584;
+    --ground:#0E1011;
+    --ground-2:#1C1F21;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;overflow-x:hidden}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:Archivo,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding-inline:24px}
+  section{padding-block:56px;border-top:1px solid var(--line)}
+  section:first-of-type{border-top:none}
+
+  .lab{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);margin:0 0 20px;display:block;
+  }
+  .lab span{color:var(--mute)}
+  h1,h2,h3{font-family:Newsreader,Georgia,serif;font-weight:300;text-wrap:balance;margin:0}
+  h1{font-size:clamp(2.1rem,5.4vw,3.5rem);line-height:1.12;letter-spacing:-.015em}
+  h2{font-size:clamp(1.6rem,3.4vw,2.25rem);line-height:1.2;margin-bottom:14px}
+  h3{font-size:1.2rem;line-height:1.3}
+  p{margin:0 0 16px;max-width:64ch;color:var(--ink-2)}
+  p.lead{font-size:1.05rem}
+  strong{color:var(--ink);font-weight:600}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;isolation:isolate;color:#F5F1EC;padding-block:72px 56px}
+  .hero::after{
+    content:"";position:absolute;z-index:-1;inset:0;left:50%;transform:translateX(-50%);
+    width:100vw;background:var(--ground);
+  }
+  .kicker{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:#A9ACB0;margin:0 0 34px;
+  }
+  .kicker b{color:#F5F1EC;font-weight:500}
+  .kicker a{color:inherit;text-decoration:none}
+  .kicker a:hover{color:#F5F1EC}
+  .hero h1{color:#FFFFFF}
+  .hero p.lead{color:#CFCBC5}
+  .facts{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:20px 28px;margin-top:40px;padding-top:26px;border-top:1px solid rgba(245,241,236,.20);
+  }
+  .facts div{display:flex;flex-direction:column;gap:4px}
+  .facts .k{
+    font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--gold);
+  }
+  .facts .v{font-size:.95rem;color:#F5F1EC;font-weight:500;overflow-wrap:anywhere}
+
+  /* ---------- rule ---------- */
+  .rule{display:flex;flex-direction:column;gap:8px;background:var(--surface);border-left:3px solid var(--gold);padding:22px 24px;margin:0 0 8px}
+  .rule b{font-size:1rem;color:var(--ink)}
+  .rule span{font-size:.93rem;color:var(--ink-2);max-width:70ch;line-height:1.55}
+
+  /* ---------- months ---------- */
+  .months{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin:22px 0 0}
+  .months label{
+    position:relative;display:flex;flex-direction:column;gap:2px;
+    border:1px solid var(--line);background:var(--paper);padding:12px 14px;cursor:pointer;
+  }
+  .months input{position:absolute;opacity:0;width:0;height:0}
+  .months .m{font-family:Newsreader,Georgia,serif;font-size:1.15rem;font-weight:300;color:var(--ink);line-height:1.1}
+  .months .y{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+  .months label:hover{border-color:var(--accent-soft)}
+  .months label:has(input:checked){border-color:var(--accent);background:var(--frost)}
+  .months label:has(input:checked) .m{color:var(--accent)}
+  .months label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+  .months label.past{opacity:.45}
+
+  /* ---------- day cards ---------- */
+  .days{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:22px}
+  .day{
+    position:relative;border:1px solid var(--line);padding:22px;background:var(--paper);
+    cursor:pointer;display:flex;flex-direction:column;gap:0;
+  }
+  .day input{position:absolute;opacity:0;width:0;height:0}
+  .day:hover{border-color:var(--accent-soft)}
+  .day:has(input:checked){border-color:var(--accent);background:var(--frost);box-shadow:inset 0 0 0 1px var(--accent)}
+  .day:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+  .day header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+  .day h3{font-size:1.3rem}
+  .dep{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-soft);padding:3px 7px;white-space:nowrap}
+  .dep.free{color:var(--mute);border-color:var(--line)}
+  .daylede{font-size:.92rem;color:var(--ink-2);margin:0 0 14px;line-height:1.5}
+  .day .k{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:8px;display:block}
+  .day ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
+  .day li{font-size:.86rem;color:var(--ink-2);padding-left:14px;position:relative;line-height:1.4}
+  .day li::before{content:"";position:absolute;left:0;top:.7em;width:7px;height:1px;background:var(--accent)}
+  .day .pick{
+    margin-top:auto;padding-top:12px;border-top:1px solid var(--line);
+    font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);
+  }
+  .day ul{margin-bottom:16px}
+  .day:has(input:checked) .pick{color:var(--accent)}
+  .day:has(input:checked) .pick::before{content:"Selected: "}
+  .day:not(:has(input:checked)) .pick::before{content:"Choose "}
+
+  /* ---------- form ---------- */
+  .form{display:none}
+  .form.on{display:block}
+  .qs{display:flex;flex-direction:column;gap:0;margin-top:8px}
+  .q{padding-block:22px;border-top:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:10px 40px;align-items:start}
+  .q:first-child{border-top:none;padding-top:6px}
+  .q .lbl{display:flex;flex-direction:column;gap:5px}
+  .q .lbl b{font-weight:500;color:var(--ink);font-size:1rem;line-height:1.35}
+  .q .lbl small{font-size:.86rem;color:var(--mute);line-height:1.45;max-width:38ch}
+  .q .lbl .req{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  textarea,input[type="text"],input[type="date"]{
+    width:100%;font:inherit;font-size:.95rem;color:var(--ink);background:var(--paper);
+    border:1px solid var(--line);padding:12px 14px;border-radius:0;-webkit-appearance:none;appearance:none;
+  }
+  textarea{min-height:96px;resize:vertical;line-height:1.5}
+  textarea:focus,input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+  .opts{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start}
+  .opts label{
+    position:relative;font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.04em;
+    border:1px solid var(--line);padding:9px 13px;color:var(--ink-2);background:var(--paper);cursor:pointer;
+  }
+  .opts input{position:absolute;opacity:0;width:0;height:0}
+  .opts label:hover{border-color:var(--accent-soft)}
+  .opts label:has(input:checked){border-color:var(--accent);color:var(--accent);background:var(--frost)}
+  .opts label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .q.err .lbl b{color:#B4453A}
+  .q.err textarea,.q.err input[type="text"],.q.err .opts label{border-color:#B4453A}
+  :root[data-theme="dark"] .q.err .lbl b{color:#E8927F}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .q.err .lbl b{color:#E8927F} }
+
+  /* ---------- steps ---------- */
+  ol.steps{margin:18px 0 0;padding:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:2px}
+  ol.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:16px;padding-block:16px;border-bottom:1px solid var(--line)}
+  ol.steps li::before{content:"0" counter(s);font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--accent);letter-spacing:.06em;padding-top:3px}
+  ol.steps p{margin:0;font-size:.95rem}
+  ol.steps b{color:var(--ink);font-weight:600}
+
+  /* ---------- send ---------- */
+  .cta{
+    margin-top:28px;background:var(--surface-2);border:1px solid var(--line);padding:30px;
+    display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;
+  }
+  .cta p{margin:0;max-width:46ch;font-size:.95rem}
+  .btn{
+    display:inline-block;background:var(--accent);color:var(--paper);
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.12em;
+    text-transform:uppercase;padding:15px 26px;text-decoration:none;border:1px solid var(--accent);cursor:pointer;
+  }
+  .btn:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .btn.ghost{background:transparent;color:var(--accent)}
+  .btns{display:flex;flex-wrap:wrap;gap:10px}
+  .preview{margin-top:22px;display:none}
+  .preview.on{display:block}
+  .preview pre{
+    white-space:pre-wrap;word-break:break-word;font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.6;
+    color:var(--ink-2);background:var(--surface);border-left:3px solid var(--gold);padding:20px 22px;margin:0;
+  }
+  .msg{margin-top:14px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;color:var(--mute);border-left:2px solid var(--accent-soft);padding-left:12px;min-height:1.2em}
+  .msg.bad{color:#B4453A;border-left-color:#B4453A}
+  .note{margin-top:14px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;color:var(--mute);border-left:2px solid var(--accent-soft);padding-left:12px}
+
+  footer{border-top:1px solid var(--line);padding-block:44px 60px;color:var(--mute);font-size:.88rem}
+  footer .name{font-family:Newsreader,Georgia,serif;font-size:1.5rem;font-weight:300;color:var(--ink);margin-bottom:6px}
+  footer a{color:var(--accent)}
+
+  @media (max-width:680px){
+    .q{grid-template-columns:1fr;gap:10px}
+    .two{grid-template-columns:1fr}
+    .cta{padding:22px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <section class="hero">
+    <p class="kicker"><b>Laws of Ace Films</b> &nbsp;/&nbsp; <a href="../">Cryo &amp; Contour</a> &nbsp;/&nbsp; Monthly Planner</p>
+    <h1>Plan the month's production day.</h1>
+    <p class="lead">Pick the month, pick the kind of day, answer a few questions about it. It all goes to Bryan in one email, and the questions, scripts and prep for that day are built from what you send.</p>
+    <div class="facts">
+      <div><span class="k">For</span><span class="v">Dr. Lorina Poe, Javon Poe</span></div>
+      <div><span class="k">Term</span><span class="v">December 2026 to November 2027</span></div>
+      <div><span class="k">Takes</span><span class="v">About five minutes</span></div>
+      <div><span class="k">Goes to</span><span class="v">lawsofacefilms@gmail.com</span></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="lab">01 &nbsp;<span>The month</span></span>
+    <h2>Which month are we planning?</h2>
+    <p>One production day a month. The earlier this comes in the better, and three weeks ahead is the comfortable lead time when a patient needs to be invited, scheduled and consented.</p>
+    <div class="months" id="months"></div>
+  </section>
+
+  <section>
+    <span class="lab">02 &nbsp;<span>The day</span></span>
+    <h2>Which kind of day is it?</h2>
+    <p class="lead">Every month is one of these six. Pick one and the questions for it appear below.</p>
+
+    <div class="days" id="days">
+      <label class="day"><input type="radio" name="day" value="Service Day">
+        <header><h3>Service Day</h3><span class="dep">Needs a patient</span></header>
+        <p class="daylede">One service, start to finish. Dr. Poe sits for about an hour, a patient who has had the service sits for half an hour, then the treatment room and the device, working.</p>
+        <span class="k">Two weeks later</span>
+        <ul><li>The film for that service page</li><li>The ad, written for Meta and an open version, horizontal and vertical</li><li>Three short educational pieces</li><li>Three reels</li></ul>
+        <span class="pick">Service Day</span>
+      </label>
+
+      <label class="day"><input type="radio" name="day" value="Story Day">
+        <header><h3>Story Day</h3><span class="dep">Needs three or four patients</span></header>
+        <p class="daylede">No doctor needed. Three or four patients back to back, about twenty-five minutes each, answering a Meta set and a website set in the same sitting.</p>
+        <span class="k">Two weeks later</span>
+        <ul><li>A film for each patient, Meta version and website version</li><li>Three reels</li><li>Patient voices for future service films</li></ul>
+        <span class="pick">Story Day</span>
+      </label>
+
+      <label class="day"><input type="radio" name="day" value="Health Day">
+        <header><h3>Health Day</h3><span class="dep free">Needs nobody</span></header>
+        <p class="daylede">Ninety minutes of Dr. Poe teaching: sleep, hormones, metabolism, whatever she wants her patients to understand. A teleprompter is on set for anything word for word.</p>
+        <span class="k">Two weeks later</span>
+        <ul><li>Four educational pieces</li><li>Three reels</li></ul>
+        <span class="pick">Health Day</span>
+      </label>
+
+      <label class="day"><input type="radio" name="day" value="Practice Day">
+        <header><h3>Practice Day</h3><span class="dep free">Needs nobody</span></header>
+        <p class="daylede">A normal working day. The team one at a time, how a visit runs from the front door to the chair, the room, and Dr. Poe on why she opened the practice.</p>
+        <span class="k">Two weeks later</span>
+        <ul><li>The practice film and origin story</li><li>Team introductions and behind the scenes</li><li>Three reels</li></ul>
+        <span class="pick">Practice Day</span>
+      </label>
+
+      <label class="day"><input type="radio" name="day" value="Campaign Day">
+        <header><h3>Campaign Day</h3><span class="dep free">Needs the offer</span></header>
+        <p class="daylede">Built around one promotion with a deadline. The practice sets the offer and the dates, the advertising team clears the wording, and the day is shaped to it.</p>
+        <span class="k">Two weeks later</span>
+        <ul><li>The campaign film with its ad cuts, horizontal and vertical</li></ul>
+        <span class="pick">Campaign Day</span>
+      </label>
+
+      <label class="day"><input type="radio" name="day" value="Event Day">
+        <header><h3>Event Day</h3><span class="dep free">Your date</span></header>
+        <p class="daylede">Something already on the calendar: a launch, an open house, an anniversary, a new device arriving. It takes the place of that month's production day.</p>
+        <span class="k">Two weeks later</span>
+        <ul><li>The event recap film</li><li>Social cuts</li></ul>
+        <span class="pick">Event Day</span>
+      </label>
+    </div>
+  </section>
+
+  <section id="prep">
+    <span class="lab">03 &nbsp;<span>The prep</span></span>
+    <h2 id="prep-h">A few questions about the day.</h2>
+    <p id="prep-p">Pick a day above and its questions appear here.</p>
+
+    <!-- Service Day -->
+    <div class="form" data-for="Service Day">
+      <div class="qs">
+        <div class="q" data-req>
+          <div class="lbl"><b>Which service is this month about?</b><span class="req">Required</span></div>
+          <div>
+            <div class="opts" data-name="Service" data-single>
+              <label><input type="radio" name="svc" value="Nano-Lipo">Nano-Lipo</label>
+              <label><input type="radio" name="svc" value="Body Contouring">Body Contouring</label>
+              <label><input type="radio" name="svc" value="Medical Weight Loss">Medical Weight Loss</label>
+              <label><input type="radio" name="svc" value="HRT">HRT</label>
+              <label><input type="radio" name="svc" value="Cryotherapy">Cryotherapy</label>
+              <label><input type="radio" name="svc" value="Aesthetics">Aesthetics</label>
+              <label><input type="radio" name="svc" value="Stem Cell Infusion Therapy">Stem Cell Infusion Therapy</label>
+              <label><input type="radio" name="svc" value="Wellness">Wellness</label>
+              <label><input type="radio" name="svc" value="Other">Other</label>
+            </div>
+            <input type="text" data-name="Other service" placeholder="If other, which one" style="margin-top:10px">
+          </div>
+        </div>
+        <div class="q" data-req>
+          <div class="lbl"><b>Is there a patient who has had this service and will sit for half an hour?</b><span class="req">Required</span></div>
+          <div class="opts" data-name="Patient" data-single>
+            <label><input type="radio" name="pt" value="Yes, booked">Yes, booked</label>
+            <label><input type="radio" name="pt" value="Someone in mind, not asked yet">Someone in mind, not asked yet</label>
+            <label><input type="radio" name="pt" value="Not yet">Not yet</label>
+          </div>
+        </div>
+        <div class="q">
+          <div class="lbl"><b>What does Dr. Poe most want people to understand about this service?</b><small>A few lines is plenty. This shapes her question set.</small></div>
+          <textarea data-name="What Dr. Poe wants understood"></textarea>
+        </div>
+        <div class="q">
+          <div class="lbl"><b>What do patients ask most before they choose it?</b><small>The real questions from the front desk and consults.</small></div>
+          <textarea data-name="What patients ask"></textarea>
+        </div>
+        <div class="q">
+          <div class="lbl"><b>Anything the ad has to say, or must not say?</b><small>An offer, a price point, a phrase your advertising team wants in or out.</small></div>
+          <textarea data-name="Ad notes"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Story Day -->
+    <div class="form" data-for="Story Day">
+      <div class="qs">
+        <div class="q" data-req>
+          <div class="lbl"><b>How many patients can you book back to back?</b><span class="req">Required</span></div>
+          <div class="opts" data-name="Patients booked" data-single>
+            <label><input type="radio" name="np" value="Three">Three</label>
+            <label><input type="radio" name="np" value="Four">Four</label>
+            <label><input type="radio" name="np" value="Still lining them up">Still lining them up</label>
+          </div>
+        </div>
+        <div class="q" data-req>
+          <div class="lbl"><b>Who are they, and what did each one have done?</b><span class="req">Required</span><small>One per line: first name, the service, roughly when. No details you would not want in an email.</small></div>
+          <textarea data-name="The patients"></textarea>
+        </div>
+        <div class="q">
+          <div class="lbl"><b>Have they all agreed to be filmed?</b></div>
+          <div class="opts" data-name="Agreed to be filmed" data-single>
+            <label><input type="radio" name="ag" value="Yes, all of them">Yes, all of them</label>
+            <label><input type="radio" name="ag" value="Some">Some</label>
+            <label><input type="radio" name="ag" value="Not asked yet">Not asked yet</label>
+          </div>
+        </div>
+        <div class="q">
+          <div class="lbl"><b>Anything about their stories worth knowing ahead of time?</b><small>Why they came in, what changed, anything they are proud of.</small></div>
+          <textarea data-name="Story notes"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Health Day -->
+    <div class="form" data-for="Health Day">
+      <div class="qs">
+        <div class="q" data-req>
+          <div class="lbl"><b>What does Dr. Poe want to teach this time?</b><span class="req">Required</span><small>Two to four topics. Sleep, hormones, metabolism, what to ask your doctor, anything she wants patients to understand.</small></div>
+          <textarea data-name="Topics"></textarea>
+        </div>
+        <div class="q">
+          <div class="lbl"><b>Anything she wants to deliver word for word?</b><small>It goes on the teleprompter. Paste it or describe it.</small></div>
+          <textarea data-name="Teleprompter"></textarea>
+        </div>
+        <div class="q">
+          <div class="lbl"><b>Questions patients keep asking her lately?</b><small>These make the best educational pieces.</small></div>
+          <textarea data-name="Patient questions"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Practice Day -->
+    <div class="form" data-for="Practice Day">
+      <div class="qs">
+        <div class="q" data-req>
+          <div class="lbl"><b>Who on the team should be on camera?</b><span class="req">Required</span><small>First names and roles. Each one is filmed on their own.</small></div>
+          <textarea data-name="Team on camera"></textarea>
+        </div>
+        <div class="q">
+          <div class="lbl"><b>What is new or worth showing?</b><small>A room, a device, a part of the visit people do not expect.</small></div>
+          <textarea data-name="Worth showing"></textarea>
+        </div>
+        <div class="q">
+          <div class="lbl"><b>Anywhere or any time filming should stay out of the way?</b><small>Patient hours, rooms, anything to avoid.</small></div>
+          <textarea data-name="Stay out of the way"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Campaign Day -->
+    <div class="form" data-for="Campaign Day">
+      <div class="qs">
+        <div class="q" data-req>
+          <div class="lbl"><b>The offer, in one line.</b><span class="req">Required</span></div>
+          <input type="text" data-name="Offer" placeholder="">
+        </div>
+        <div class="q" data-req>
+          <div class="lbl"><b>When does it run?</b><span class="req">Required</span></div>
+          <div class="two">
+            <input type="date" data-name="Runs from" aria-label="Runs from">
+            <input type="date" data-name="Runs through" aria-label="Runs through">
+          </div>
+        </div>
+        <div class="q">
+          <div class="lbl"><b>Who carries it on camera?</b></div>
+          <div class="opts" data-name="On camera" data-single>
+            <label><input type="radio" name="cc" value="Dr. Poe">Dr. Poe</label>
+            <label><input type="radio" name="cc" value="A patient">A patient</label>
+            <label><input type="radio" name="cc" value="The team">The team</label>
+            <label><input type="radio" name="cc" value="Not sure">Not sure</label>
+          </div>
+        </div>
+        <div class="q">
+          <div class="lbl"><b>Has your advertising team cleared the wording?</b></div>
+          <div class="opts" data-name="Wording cleared" data-single>
+            <label><input type="radio" name="cl" value="Yes">Yes</label>
+            <label><input type="radio" name="cl" value="Not yet">Not yet</label>
+          </div>
+        </div>
+        <div class="q">
+          <div class="lbl"><b>Wording that must appear, or must not.</b><small>Terms, exclusions, the exact name of the offer.</small></div>
+          <textarea data-name="Required wording"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Event Day -->
+    <div class="form" data-for="Event Day">
+      <div class="qs">
+        <div class="q" data-req>
+          <div class="lbl"><b>What is the event?</b><span class="req">Required</span></div>
+          <input type="text" data-name="Event" placeholder="">
+        </div>
+        <div class="q" data-req>
+          <div class="lbl"><b>When and where?</b><span class="req">Required</span></div>
+          <div class="two">
+            <input type="date" data-name="Event date" aria-label="Event date">
+            <input type="text" data-name="Where" placeholder="Where" aria-label="Where">
+          </div>
+          <input type="text" data-name="Start and end time" placeholder="Start and end time" style="margin-top:10px">
+        </div>
+        <div class="q">
+          <div class="lbl"><b>What matters most to capture?</b><small>The moment, the people, the thing being unveiled.</small></div>
+          <textarea data-name="Must capture"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Common -->
+    <div class="form" id="common">
+      <div class="qs">
+        <div class="q" data-req>
+          <div class="lbl"><b>Which week works best to film?</b><span class="req">Required</span><small>The second week is the preference. When that does not work, the day moves and everything else moves with it.</small></div>
+          <div class="opts" data-name="Preferred week" data-single>
+            <label><input type="radio" name="wk" value="First week">First week</label>
+            <label><input type="radio" name="wk" value="Second week">Second week</label>
+            <label><input type="radio" name="wk" value="Third week">Third week</label>
+            <label><input type="radio" name="wk" value="Fourth week">Fourth week</label>
+          </div>
+        </div>
+        <div class="q">
+          <div class="lbl"><b>Dates to avoid</b></div>
+          <input type="text" data-name="Dates to avoid" placeholder="">
+        </div>
+        <div class="q">
+          <div class="lbl"><b>Anything else for this month</b></div>
+          <textarea data-name="Anything else"></textarea>
+        </div>
+        <div class="q">
+          <div class="lbl"><b>Sent by</b></div>
+          <div class="opts" data-name="Sent by" data-single>
+            <label><input type="radio" name="by" value="Javon Poe">Javon Poe</label>
+            <label><input type="radio" name="by" value="Dr. Lorina Poe">Dr. Lorina Poe</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="lab">04 &nbsp;<span>What happens next</span></span>
+    <h2>The same four steps, every month.</h2>
+    <ol class="steps">
+      <li><p><b>Pre.</b> Bryan replies to confirm the day. The questions and any ad script are written from what you sent and go to you and your advertising team for review.</p></li>
+      <li><p><b>Film.</b> The production day. Once filming is complete, editing begins.</p></li>
+      <li><p><b>Post.</b> Everything from that day is built.</p></li>
+      <li><p><b>Delivery.</b> One link, your feedback, and this page again for the next month.</p></li>
+    </ol>
+    <p class="note">If a patient falls through, the day still happens. It switches to a Health Day or a Practice Day and the patient moves to the following month.</p>
+  </section>
+
+  <section>
+    <span class="lab">05 &nbsp;<span>Send it</span></span>
+    <h2>Send the plan to Bryan.</h2>
+    <div class="cta">
+      <p>This opens an email to lawsofacefilms@gmail.com with your answers filled in. Look it over, then hit send from your own mail app.</p>
+      <div class="btns">
+        <button class="btn" id="send" type="button">Send to Bryan</button>
+        <button class="btn ghost" id="copy" type="button">Copy instead</button>
+      </div>
+    </div>
+    <div class="msg" id="msg"></div>
+    <div class="preview" id="preview">
+      <span class="lab">What the email says</span>
+      <pre id="pre"></pre>
+    </div>
+  </section>
+
+  <footer>
+    <div class="name">Bryan Williams</div>
+    <div>Laws of Ace Films LLC</div>
+    <div><a href="mailto:lawsofacefilms@gmail.com">lawsofacefilms@gmail.com</a> &nbsp;/&nbsp; <a href="https://lawsofacefilms.com">lawsofacefilms.com</a> &nbsp;/&nbsp; <a href="../">Partnership overview</a></div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var TO = 'lawsofacefilms@gmail.com';
+  var KEY = 'cryo-plan-draft';
+  var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  /* ---- months: December 2026 through November 2027 ---- */
+  var box = document.getElementById('months');
+  var now = new Date();
+  var list = [];
+  for (var i = 0; i < 12; i++) {
+    var d = new Date(2026, 11 + i, 1);
+    list.push(d);
+  }
+  // default: the next month that has not started yet, within the term
+  var def = null;
+  for (var j = 0; j < list.length; j++) {
+    var m = list[j];
+    if (m.getFullYear() > now.getFullYear() || (m.getFullYear() === now.getFullYear() && m.getMonth() > now.getMonth())) { def = j; break; }
+  }
+  if (def === null) def = 0;
+  list.forEach(function(m, idx){
+    var val = MONTHS[m.getMonth()] + ' ' + m.getFullYear();
+    var past = (m.getFullYear() < now.getFullYear()) || (m.getFullYear() === now.getFullYear() && m.getMonth() < now.getMonth());
+    var lab = document.createElement('label');
+    if (past) lab.className = 'past';
+    lab.innerHTML = '<input type="radio" name="month" value="' + val + '"' + (idx === def ? ' checked' : '') + '><span class="m">' + MONTHS[m.getMonth()] + '</span><span class="y">' + m.getFullYear() + '</span>';
+    box.appendChild(lab);
+  });
+
+  /* ---- day selection shows its form ---- */
+  var forms = Array.prototype.slice.call(document.querySelectorAll('.form[data-for]'));
+  var common = document.getElementById('common');
+  var prepH = document.getElementById('prep-h');
+  var prepP = document.getElementById('prep-p');
+  function currentDay(){
+    var r = document.querySelector('input[name="day"]:checked');
+    return r ? r.value : '';
+  }
+  function showForm(){
+    var day = currentDay();
+    forms.forEach(function(f){ f.classList.toggle('on', f.getAttribute('data-for') === day); });
+    common.classList.toggle('on', !!day);
+    if (day) {
+      prepH.textContent = 'A few questions about the ' + day + '.';
+      prepP.textContent = 'Short answers are fine. The questions and scripts for the day are built from these.';
+    } else {
+      prepH.textContent = 'A few questions about the day.';
+      prepP.textContent = 'Pick a day above and its questions appear here.';
+    }
+  }
+  document.getElementById('days').addEventListener('change', function(){
+    showForm();
+    save();
+    var p = document.getElementById('prep');
+    if (p && p.scrollIntoView) p.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+
+  /* ---- gather answers ---- */
+  function monthVal(){
+    var r = document.querySelector('input[name="month"]:checked');
+    return r ? r.value : '';
+  }
+  function fieldValue(el){
+    if (el.classList.contains('opts')) {
+      var c = el.querySelector('input:checked');
+      return c ? c.value : '';
+    }
+    return (el.value || '').trim();
+  }
+  function collect(scope){
+    var out = [];
+    var els = scope.querySelectorAll('[data-name]');
+    Array.prototype.forEach.call(els, function(el){
+      var v = fieldValue(el);
+      if (v) out.push({k: el.getAttribute('data-name'), v: v});
+    });
+    return out;
+  }
+  function validate(){
+    var ok = true;
+    var day = currentDay();
+    var scopes = [];
+    forms.forEach(function(f){ if (f.getAttribute('data-for') === day) scopes.push(f); });
+    scopes.push(common);
+    document.querySelectorAll('.q.err').forEach(function(q){ q.classList.remove('err'); });
+    scopes.forEach(function(s){
+      s.querySelectorAll('.q[data-req]').forEach(function(q){
+        var any = false;
+        q.querySelectorAll('[data-name]').forEach(function(el){ if (fieldValue(el)) any = true; });
+        if (!any) { q.classList.add('err'); ok = false; }
+      });
+    });
+    return ok;
+  }
+  function buildEmail(){
+    var day = currentDay();
+    var month = monthVal();
+    var lines = [];
+    var answers = [];
+    forms.forEach(function(f){ if (f.getAttribute('data-for') === day) answers = answers.concat(collect(f)); });
+    var commonA = collect(common);
+    var svc = '';
+    answers.forEach(function(a){ if (a.k === 'Service') svc = a.v; if (a.k === 'Other service' && a.v) svc = a.v; });
+    var subject = 'Cryo & Contour: ' + month + ' production day, ' + day + (svc && day === 'Service Day' ? ' (' + svc + ')' : '');
+
+    lines.push('Hi Bryan,');
+    lines.push('');
+    lines.push('Here is the plan for ' + month + '.');
+    lines.push('');
+    lines.push('MONTH: ' + month);
+    lines.push('DAY TYPE: ' + day);
+    lines.push('');
+    answers.forEach(function(a){
+      if (a.k === 'Other service') return;
+      lines.push(a.k.toUpperCase() + ': ' + a.v);
+      if (a.v.indexOf('\n') !== -1) lines.push('');
+    });
+    lines.push('');
+    commonA.forEach(function(a){
+      lines.push(a.k.toUpperCase() + ': ' + a.v);
+    });
+    lines.push('');
+    lines.push('Sent from the Cryo & Contour monthly planner.');
+    return {subject: subject, body: lines.join('\n')};
+  }
+
+  /* ---- send ---- */
+  var msg = document.getElementById('msg');
+  var preview = document.getElementById('preview');
+  var pre = document.getElementById('pre');
+  function say(t, bad){ msg.textContent = t; msg.classList.toggle('bad', !!bad); }
+  function ready(){
+    if (!monthVal()) { say('Pick a month first.', true); return null; }
+    if (!currentDay()) { say('Pick a kind of day first.', true); return null; }
+    if (!validate()) {
+      say('A required answer is missing. It is marked above.', true);
+      var e = document.querySelector('.q.err');
+      if (e && e.scrollIntoView) e.scrollIntoView({behavior:'smooth', block:'center'});
+      return null;
+    }
+    var em = buildEmail();
+    pre.textContent = 'To: ' + TO + '\nSubject: ' + em.subject + '\n\n' + em.body;
+    preview.classList.add('on');
+    return em;
+  }
+  document.getElementById('send').addEventListener('click', function(){
+    var em = ready();
+    if (!em) return;
+    var href = 'mailto:' + TO + '?subject=' + encodeURIComponent(em.subject) + '&body=' + encodeURIComponent(em.body);
+    say('Your mail app should open with the email filled in. If it does not, use Copy instead and paste it into a new email to ' + TO + '.');
+    window.location.href = href;
+  });
+  document.getElementById('copy').addEventListener('click', function(){
+    var em = ready();
+    if (!em) return;
+    var text = 'Subject: ' + em.subject + '\n\n' + em.body;
+    function done(){ say('Copied. Paste it into a new email to ' + TO + '.'); }
+    function fail(){ say('Could not copy automatically. Select the text below and copy it into an email to ' + TO + '.', true); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fail);
+    } else { fail(); }
+  });
+
+  /* ---- keep a draft on this device ---- */
+  function save(){
+    try {
+      var data = {};
+      document.querySelectorAll('input[type="radio"]:checked').forEach(function(r){ data['r:' + r.name] = r.value; });
+      document.querySelectorAll('textarea[data-name], input[type="text"][data-name], input[type="date"][data-name]').forEach(function(el){
+        var id = el.getAttribute('data-name') + '|' + (el.closest('.form') ? (el.closest('.form').getAttribute('data-for') || 'common') : '');
+        if (el.value) data['f:' + id] = el.value;
+      });
+      localStorage.setItem(KEY, JSON.stringify(data));
+    } catch (e) {}
+  }
+  function load(){
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (!raw) return;
+      var data = JSON.parse(raw);
+      Object.keys(data).forEach(function(k){
+        if (k.indexOf('r:') === 0) {
+          var name = k.slice(2);
+          var r = document.querySelector('input[type="radio"][name="' + name + '"][value="' + data[k].replace(/"/g, '\\"') + '"]');
+          if (r) r.checked = true;
+        } else if (k.indexOf('f:') === 0) {
+          var parts = k.slice(2).split('|');
+          var sel = parts[1] && parts[1] !== 'common' ? '.form[data-for="' + parts[1] + '"] [data-name="' + parts[0] + '"]' : '#common [data-name="' + parts[0] + '"]';
+          var el = document.querySelector(sel);
+          if (el) el.value = data[k];
+        }
+      });
+    } catch (e) {}
+  }
+  load();
+  showForm();
+  document.addEventListener('input', save);
+  document.addEventListener('change', save);
+})();
+</script>
+
+</body>
+</html>
