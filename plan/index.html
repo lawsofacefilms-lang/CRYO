@@ -492,8 +492,9 @@
     <div class="form" id="common">
       <div class="qs">
         <div class="q" data-req>
-          <div class="lbl"><b>Which week works best to film?</b><span class="req">Required</span><small>The second week is the preference. When that does not work, the day moves and everything else moves with it.</small></div>
+          <div class="lbl"><b>Which week works best to film?</b><span class="req">Required</span><small>The second week is the preference. When that does not work, the day moves and everything else moves with it. For December, a late November date after the 20th works as a head start.</small></div>
           <div class="opts" data-name="Preferred week" data-single>
+            <label class="nov"><input type="radio" name="wk" value="Late November, after the 20th (head start on December)">Late November, after the 20th</label>
             <label><input type="radio" name="wk" value="First week">First week</label>
             <label><input type="radio" name="wk" value="Second week">Second week</label>
             <label><input type="radio" name="wk" value="Third week">Third week</label>
@@ -753,6 +754,10 @@
   }
   load();
   showForm();
+  var nov = document.querySelector('input[name="wk"][value^="Late November"]');
+  function novToggle(){ if (!nov) return; var on = monthVal() === 'December 2026'; nov.closest('label').style.display = on ? '' : 'none'; if (!on && nov.checked) nov.checked = false; }
+  box.addEventListener('change', novToggle);
+  novToggle();
   document.addEventListener('input', save);
   document.addEventListener('change', save);
 })();
